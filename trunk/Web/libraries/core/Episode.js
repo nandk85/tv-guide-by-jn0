@@ -1,16 +1,11 @@
 function Episode(id, number, oSeason){
-	/* héritage */
-    this.superclass = VideoDescriptor;             // classe parente
-    this.prototype = new this.superclass(id); // héritage des méthodes
-    this.superclass();                    //appel du super constructeur
-    delete this.superclass;              // inutile de garder la classe parente
+    this.superclass = VideoDescriptor;
+    this.prototype = new this.superclass(id);
+    this.superclass();
+    delete this.superclass;
 	
 	this._number = number;
 	this._season = oSeason;
-}
-
-Episode.prototype.getId() {
-	return this.prototype.getId();
 }
 
 Episode.prototype.getNumber() {
