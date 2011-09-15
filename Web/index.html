@@ -4,13 +4,102 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>TV Guide by JN0</title>
 
-<link type="text/css" href="skins/default/css/layout.css" rel="stylesheet" />	
+<link type="text/css" href="skins/default/css/layout.css" rel="stylesheet" />
+<script type="text/javascript" src="libraries/tools.js"></script>
+<script type="text/javascript" src="libraries/core/TVGuide.js"></script>
+
+<script type="text/javascript" src="libraries/core/Actor.js"></script>
+<script type="text/javascript" src="libraries/core/Channel.js"></script>
+<script type="text/javascript" src="libraries/core/Episode.js"></script>
+<script type="text/javascript" src="libraries/core/Movie.js"></script>
+<script type="text/javascript" src="libraries/core/Person.js"></script>
+<script type="text/javascript" src="libraries/core/Program.js"></script>
+<script type="text/javascript" src="libraries/core/Season.js"></script>
+<script type="text/javascript" src="libraries/core/TVShow.js"></script>
+<script type="text/javascript" src="libraries/core/VideoDescriptor.js"></script>
+
 <script type="text/javascript" src="libraries/jQuery/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="libraries/jQuery/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript">
 			window.onload= function() {
-				window.oTVGuide= new TVGuide();
-				oTVGuide.draw(getObject("TVGuideContainer"));
+				window.oTVGuide= new TVGuide(1, "JNO's Guide");
+				
+				/*TF1*/
+				var oChannel = new Channel(1, 1, "TF1");
+				
+				
+				/*Matrix 1*/
+				var oProgram = new Program(1, new Date(2011, 8, 14, 21, 0, 0, 0), new Date(2011, 8, 14, 22, 30, 0, 0));
+				var oVideo = new VideoDescriptor(1);
+				oVideo.setTitle("Matrix");
+				oVideo.setOriginalTitle("The Matrix");
+				oVideo.setDuration(120);
+				oVideo.setSummary("Monsieur Anderson devient Neo et intègre la matrice aux côtés de Trinity et Morpheus afin de libérer le monde de l'emprise des machines.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				/*Matrix 2*/
+				oProgram = new Program(1, new Date(2011, 8, 14, 22, 30, 0, 0), new Date(2011, 8, 15, 0, 0, 0, 0));
+				oVideo = new VideoDescriptor(2);
+				oVideo.setTitle("Matrix reloaded");
+				oVideo.setOriginalTitle("The Matrix Reloaded");
+				oVideo.setDuration(120);
+				oVideo.setSummary("Neo continue sa lutte sans merci contre les machines.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				/*Matrix 3*/
+				oProgram = new Program(1, new Date(2011, 8, 15, 0, 0, 0, 0), new Date(2011, 8, 15, 1, 30, 0, 0));
+				oVideo = new VideoDescriptor(3);
+				oVideo.setTitle("Matrix revolution");
+				oVideo.setOriginalTitle("The Matrix Revolution");
+				oVideo.setDuration(120);
+				oVideo.setSummary("L'épilogue de la trilogie.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+				
+				
+				oTVGuide.addChannel(oChannel);
+				
+				/*France2*/
+				oChannel = new Channel(2, 2, "FRANCE2");
+				
+				oProgram = new Program(1, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 23, 00, 0, 0));
+				
+				oVideo = new VideoDescriptor(1);
+				oVideo.setTitle("Joséphine Ange Gardien");
+				oVideo.setOriginalTitle("Josephaïne angel garden");
+				oVideo.setDuration(90);
+				oVideo.setSummary("Mimi Matie n'arrête pas !.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+				oTVGuide.addChannel(oChannel);
+
+				/*Canal +*/
+				oChannel = new Channel(4, 4, "Canal+");
+				
+				oProgram = new Program(1, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
+				
+				oVideo = new VideoDescriptor(1);
+				oVideo.setTitle("Platanes");
+				oVideo.setOriginalTitle("Platanes");
+				oVideo.setDuration(45);
+				oVideo.setSummary("Mimi Matie n'arrête pas !.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+				oTVGuide.addChannel(oChannel);
+
+				
+				oTVGuide.draw(getObject("TVGuideContainer"), new Date(2011, 8, 14, 20, 30, 0, 0));
+				
+				//getObject("TVGuideContainer").innerHTML = oTVGuide.toString();
+				
+				//oTVGuide.draw(getObject("TVGuideContainer"));
 			};
 		
 			$(function(){
@@ -68,7 +157,7 @@
 		</script>
 		<style type="text/css">
 			/*demo page css*/
-			body{ font: 62.5% "Trebuchet MS", sans-serif; margin: 50px;}
+			body{ font: 62.5% "Trebuchet MS", sans-serif;}
 			.demoHeaders { margin-top: 2em; }
 			#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
 			#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
@@ -83,7 +172,7 @@
 	<p id="TVGuideContainer"></p>
 	
 	
-	
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	
 	
 	
