@@ -1,44 +1,76 @@
-function TVGuide(id, number, name){
+var PADDING_TOP = 10;
+var PADDING_LEFT = 10;
+
+function TVGuide(id, name){	
 	this._id = id;
 	this._name = name;
 }
 
-TVGuide.prototype.getId() {
+TVGuide.prototype.getId = function() {
 	return this._id;
 }
 
-TVGuide.prototype.getName() {
+TVGuide.prototype.getName = function() {
 	return this._name;
 }
 
 
-TVGuide.prototype.getChannelsList() {
+TVGuide.prototype.getChannelsList = function() {
 	return this._channelsList;
 }
 
-TVGuide.prototype.setChannelsList(oChannelsList) {
+TVGuide.prototype.setChannelsList = function(oChannelsList) {
 	this._channelsList = oChannelsList;
 }
 
-TVGuide.prototype.addChannel(oChannel) {
-	this._channelsList[oChannel.getNumber()] = oChannel;
+TVGuide.prototype.addChannel = function(oChannel) {
+	if(!this._channelsList) {
+		this._channelsList = new Array();
+	}
+	this._channelsList.push(oChannel);
 }
 
+TVGuide.prototype.getElement = function() {
+	return this._element;
+}
 
+TVGuide.prototype.setElement = function(eDiv) {
+	this._element = eDiv;
+}
 
-TVGuide.prototype.draw = function() {
-	var eDiv= this._element;
+TVGuide.prototype.draw = function(eParent, dStartDate) {
+	var eDiv= this.getElement();
 
 	if (!eDiv) {
 		eDiv= document.createElement("div");
-		eDiv.className= "gameCell";
-		eDiv.style.left= ""+((this._size)*(this._x-1)+2*parseInt((this._x-1)/3))+"px";
-		eDiv.style.top= ""+((this._size)*(this._y-1)+2*parseInt((this._y-1)/3))+"px";
-		eDiv.style.offsetWidth=this._size-11;
+		//Position
+		eDiv.style.position="absolute";
+		eDiv.style.left= PADDING_LEFT + "px";
+		eDiv.style.top= PADDING_TOP + "px";
+		
+		//size
+		eDiv.style.offsetWidth=window.innerWidth - 40;
 		eDiv.style.width = eDiv.style.offsetWidth+"px";
-		eDiv.style.offsetHeight=this._size-11;
+		eDiv.style.offsetHeight=0;
+		
+		eDiv.style.border = "1px solid red";
+		for (var i=0; i<this.getChannelsList().length; i++) {
+			this.getChannelsList()[i].draw(eDiv, dStartDate);
+			var channelDiv = this.getChannelsList()[i].getElement();
+			//channelDiv.style.left= PADDING_LEFT + "px";
+			//alert(((eDiv.style.top.replace("px","")*1) + (i*channelDiv.style.offsetHeight)));
+			channelDiv.style.top= ((i*channelDiv.style.offsetHeight)) + "px";
+
+			eDiv.style.offsetHeight=eDiv.style.offsetHeight + channelDiv.style.offsetHeight;
+		}
 		eDiv.style.height = eDiv.style.offsetHeight+"px";
-		if (!document.onkeypress) {
+
+		eParent.appendChild(eDiv);
+	}
+	this.setElement(eDiv);
+		
+	
+/*		if (!document.onkeypress) {
 			window.currentGrid= this._parentGrid;
 			document.onkeypress= function(evt) {
 				if (window.currentGrid.focusedCell) return window.currentGrid.focusedCell.onkeypress(evt);
@@ -103,11 +135,15 @@ TVGuide.prototype.draw = function() {
 
 	//if (eDiv.childNodes[0]) eDiv.removeChild(eDiv.childNodes[0]);
 	//if (this._value) eDiv.appendChild(document.createTextNode(this._value));
+	*/
 }
   
 
 TVGuide.prototype.toString = function() {
 	var toReturn = "TVGuide : id=" + this._id; 
 	toReturn += " | Name=" + this._name;
+	for (var i=0; i<this.getChannelsList().length; i++) {
+		toReturn += "<br>&nbsp;" + this.getChannelsList()[i].toString();
+	}
 	return toReturn;
   }

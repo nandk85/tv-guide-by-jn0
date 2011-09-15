@@ -5,15 +5,15 @@ function Actor(id, sName){
     delete this.superclass;
 }
 
-Actor.prototype.getVideosList() {
+Actor.prototype.getVideosList = function() {
 	return this._videosList;
 }
 
-Actor.prototype.setVideosList(sVideosList) {
+Actor.prototype.setVideosList = function(sVideosList) {
 	this._videosList = sVideosList;
 }
 
-Actor.prototype.addVideo(oVideoDescriptor) {
+Actor.prototype.addVideo = function(oVideoDescriptor) {
 	this._videosList.push(oVideoDescriptor);
 }
 

@@ -8,11 +8,11 @@ function Episode(id, number, oSeason){
 	this._season = oSeason;
 }
 
-Episode.prototype.getNumber() {
+Episode.prototype.getNumber = function() {
 	return this._number;
 }
 
-Episode.prototype.getSeason() {
+Episode.prototype.getSeason = function() {
 	return this._season;
 }
 

@@ -3,59 +3,59 @@ function Person(id, sName){
 	this._name = sName;
 }
 
-Person.prototype.getId() {
+Person.prototype.getId = function() {
 	return this.prototype._id;
 }
 
-Person.prototype.getName() {
+Person.prototype.getName = function() {
 	return this.prototype._name;
 }
 
-Person.prototype.getFirstName() {
+Person.prototype.getFirstName = function() {
 	return this._firstName;
 }
 
-Person.prototype.setFirstName(sFirstName) {
+Person.prototype.setFirstName = function(sFirstName) {
 	this._firstName = sFirstName;
 }
 
-Person.prototype.getBirthDate() {
+Person.prototype.getBirthDate = function() {
 	return this._birthDate;
 }
 
-Person.prototype.setBirthDate(dBirthDate) {
+Person.prototype.setBirthDate = function(dBirthDate) {
 	this._birthDate = dBirthDate;
 }
 
-Person.prototype.getPhoto() {
+Person.prototype.getPhoto = function() {
 	return this._photo;
 }
 
-Person.prototype.setPhoto(sPhoto) {
+Person.prototype.setPhoto = function(sPhoto) {
 	this._photo = sPhoto;
 }
 
-Person.prototype.getBiography() {
+Person.prototype.getBiography = function() {
 	return this._biography;
 }
 
-Person.prototype.setBiography(sBiography) {
+Person.prototype.setBiography = function(sBiography) {
 	this._biography = sBiography;
 }
 
-Person.prototype.getRole() {
+Person.prototype.getRole = function() {
 	return this._role;
 }
 
-Person.prototype.setRole(sRole) {
+Person.prototype.setRole = function(sRole) {
 	this._role = sRole;
 }
 
-Person.prototype.getFunction() {
+Person.prototype.getFunction = function() {
 	return this._function;
 }
 
-Person.prototype.setFunction(sFunction) {
+Person.prototype.setFunction = function(sFunction) {
 	this._function = sFunction;
 }
 
