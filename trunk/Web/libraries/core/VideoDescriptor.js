@@ -58,6 +58,14 @@ VideoDescriptor.prototype.getActorsList = function() {
 	return this._actorsList;
 }
 
+VideoDescriptor.prototype.getProgram = function() {
+	return this._program;
+}
+
+VideoDescriptor.prototype.setProgram = function(oProgram) {
+	this._program = oProgram;
+}
+
 VideoDescriptor.prototype.setActorsList = function(oActorsList) {
 	this._actorsList = oActorsList;
 }
