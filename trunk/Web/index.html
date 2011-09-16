@@ -21,12 +21,15 @@
 <script type="text/javascript" src="libraries/jQuery/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="libraries/jQuery/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript">
+			window.onresize= function() {
+				window.oTVGuide.draw(getObject("TVGuideContainer"), new Date(2011, 8, 14, 21, 30, 0, 0));
+			}
 			window.onload= function() {
 				window.oTVGuide= new TVGuide(1, "JNO's Guide");
 				
 				/*TF1*/
 				var oChannel = new Channel(1, 1, "TF1");
-				
+				oChannel.setFullName("TF1");
 				
 				/*Matrix 1*/
 				var oProgram = new Program(1, new Date(2011, 8, 14, 21, 0, 0, 0), new Date(2011, 8, 14, 22, 30, 0, 0));
@@ -76,6 +79,7 @@
 				oTVGuide.addChannel(oChannel);
 				/*France2*/
 				oChannel = new Channel(2, 2, "FRANCE2");
+				oChannel.setFullName("France 2");
 				
 				/*Josephine*/
 				oProgram = new Program(4, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 23, 00, 0, 0));
@@ -140,7 +144,8 @@
 				oTVGuide.addChannel(oChannel);
 
 				/*Canal +*/
-				oChannel = new Channel(4, 4, "Canal+");
+				oChannel = new Channel(4, 4, "CANAL+");
+				oChannel.setFullName("Canal +");
 				
 				/*Platanes*/
 				oProgram = new Program(5, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
@@ -168,6 +173,97 @@
 
 				oTVGuide.addChannel(oChannel);
 
+				/*France 5*/
+				oChannel = new Channel(5, 5, "FRANCE 5");
+				oChannel.setFullName("France 5");
+				
+				/*Platanes*/
+				oProgram = new Program(5, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
+				
+				oVideo = new VideoDescriptor(5);
+				oVideo.setTitle("Platanes");
+				oVideo.setOriginalTitle("Platanes");
+				oVideo.setDuration(45);
+				oVideo.setSummary("Mimi Matie n'arrête pas !.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				/*Game of Thrones*/
+				oProgram = new Program(9, new Date(2011, 8, 14, 23, 30, 0, 0), new Date(2011, 8, 15, 0, 30, 0, 0));
+				
+				oVideo = new VideoDescriptor(9);
+				oVideo.setTitle("Le trône de fer");
+				oVideo.setOriginalTitle("Game of Throne");
+				oVideo.setDuration(60);
+				oVideo.setSummary("Célèbre série avec des dragons et plein de traîtres.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				oTVGuide.addChannel(oChannel);
+
+				/*M6*/
+				oChannel = new Channel(4, 4, "M6");
+				oChannel.setFullName("M6");
+				
+				/*Platanes*/
+				oProgram = new Program(5, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
+				
+				oVideo = new VideoDescriptor(5);
+				oVideo.setTitle("Platanes");
+				oVideo.setOriginalTitle("Platanes");
+				oVideo.setDuration(45);
+				oVideo.setSummary("Mimi Matie n'arrête pas !.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				/*Game of Thrones*/
+				oProgram = new Program(9, new Date(2011, 8, 14, 23, 30, 0, 0), new Date(2011, 8, 15, 0, 30, 0, 0));
+				
+				oVideo = new VideoDescriptor(9);
+				oVideo.setTitle("Le trône de fer");
+				oVideo.setOriginalTitle("Game of Throne");
+				oVideo.setDuration(60);
+				oVideo.setSummary("Célèbre série avec des dragons et plein de traîtres.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				oTVGuide.addChannel(oChannel);
+
+				/*Arte*/
+				oChannel = new Channel(4, 4, "Arte");
+				oChannel.setFullName("Arte");
+				
+				/*Platanes*/
+				oProgram = new Program(5, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
+				
+				oVideo = new VideoDescriptor(5);
+				oVideo.setTitle("Platanes");
+				oVideo.setOriginalTitle("Platanes");
+				oVideo.setDuration(45);
+				oVideo.setSummary("Mimi Matie n'arrête pas !.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				/*Game of Thrones*/
+				oProgram = new Program(9, new Date(2011, 8, 14, 23, 30, 0, 0), new Date(2011, 8, 15, 0, 30, 0, 0));
+				
+				oVideo = new VideoDescriptor(9);
+				oVideo.setTitle("Le trône de fer");
+				oVideo.setOriginalTitle("Game of Throne");
+				oVideo.setDuration(60);
+				oVideo.setSummary("Célèbre série avec des dragons et plein de traîtres.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				oTVGuide.addChannel(oChannel);
+
+				
 				oTVGuide.draw(getObject("TVGuideContainer"), new Date(2011, 8, 14, 21, 30, 0, 0));
 				oTVGuide.setFocusToFirstProgram();
 				

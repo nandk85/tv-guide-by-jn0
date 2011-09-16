@@ -108,21 +108,18 @@ VideoDescriptor.prototype.setElement = function(eDiv) {
 
 VideoDescriptor.prototype.draw = function(eParent) {
 	var eDiv= this.getElement();
-
-	if (!eDiv) {
-		eDiv= document.createElement("div");
-
-		eDiv.style.offsetHeight=eParent.style.offsetHeight;
-		eDiv.style.height = eParent.style.offsetHeight+"px";
-		eDiv.style.offsetWidth=eParent.style.offsetWidth;
-		eDiv.style.width = eParent.style.offsetWidth+"px";
-		//eDiv.style.border = "1px solid yellow";
-		
-		eDiv.appendChild(document.createTextNode(this.getTitle()));
-		
-		eParent.appendChild(eDiv);
-	}
+	eDiv= document.createElement("div");
 	this.setElement(eDiv);
+	
+	eDiv.style.offsetHeight=eParent.style.offsetHeight;
+	eDiv.style.height = eParent.style.offsetHeight+"px";
+	eDiv.style.offsetWidth=eParent.style.offsetWidth;
+	eDiv.style.width = eParent.style.offsetWidth+"px";
+	//eDiv.style.border = "1px solid yellow";
+	
+	eDiv.appendChild(document.createTextNode(this.getTitle()));
+	
+	eParent.appendChild(eDiv);
 }
 
 VideoDescriptor.prototype.toString = function() {

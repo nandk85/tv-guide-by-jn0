@@ -73,47 +73,47 @@ Program.prototype.setElement = function(eDiv) {
 	this._element = eDiv;
 }
 
+Program.prototype.deleteElement = function() {
+	if (this.getElement()) this.getElement().removeChild(this.getElement().childNodes[0]);
+}
+
 Program.prototype.draw = function(eParent) {
 	var eDiv= this.getElement();
-
-	if (!eDiv) {
-		eDiv= document.createElement("div");
-		
-		//position
-		eDiv.style.position="absolute";
-		
-		//size
-		eDiv.style.offsetHeight=eParent.style.offsetHeight;
-		eDiv.style.height = eParent.style.offsetHeight + "px";
-
-		//compute width with beginDate and endDate
-		eDiv.style.offsetWidth=this.getWidthInPixels();
-		eDiv.style.width = eDiv.style.offsetWidth+"px";
-
-		eDiv.style.border = "1px solid yellow";
-		//eDiv.style.float="right";
-		
-		this.getVideoDescriptor().draw(eDiv);
-		var videoDiv = this.getVideoDescriptor().getElement();
-		
-		if (!document.onkeypress) {
-			window.focusedProgram= this;
-			document.onkeypress= function(evt) {
-				if (window.focusedProgram) return window.focusedProgram.onkeypress(evt);
-			};
-			document.onkeydown= function(evt) {
-				if (window.focusedProgram) return window.focusedProgram.onkeydown(evt);
-			};
-		}
-		eDiv._parent = this;
-		eDiv.onclick= function(evt) {
-			this._parent.onfocus(evt);
-		};
-
-		
-		eParent.appendChild(eDiv);
-	}
+	eDiv= document.createElement("div");
 	this.setElement(eDiv);
+	//position
+	eDiv.style.position="absolute";
+	
+	//size
+	eDiv.style.offsetHeight=eParent.style.offsetHeight;
+	eDiv.style.height = eParent.style.offsetHeight + "px";
+
+	//compute width with beginDate and endDate
+	eDiv.style.offsetWidth=this.getWidthInPixels();
+	eDiv.style.width = eDiv.style.offsetWidth+"px";
+
+	eDiv.style.border = "1px solid yellow";
+	//eDiv.style.float="right";
+	
+	this.getVideoDescriptor().draw(eDiv);
+	var videoDiv = this.getVideoDescriptor().getElement();
+	
+	if (!document.onkeypress) {
+		window.focusedProgram= this;
+		document.onkeypress= function(evt) {
+			if (window.focusedProgram) return window.focusedProgram.onkeypress(evt);
+		};
+		document.onkeydown= function(evt) {
+			if (window.focusedProgram) return window.focusedProgram.onkeydown(evt);
+		};
+	}
+	eDiv._parent = this;
+	eDiv.onclick= function(evt) {
+		this._parent.onfocus(evt);
+	};
+
+	
+	eParent.appendChild(eDiv);
 }
 
 Program.prototype.onfocus= function(evt) {
@@ -161,26 +161,45 @@ Program.prototype.onkeydown= function(evt) {
 	if (!evt) evt= window.event;
  
 	var iKeyValue= evt.keyCode;
-	
+
+	var oTVGuide = this.getChannel().getTVGuide();
 	switch(iKeyValue) {
 	case 37: //LEFT
-		var oPreviousProgram = this.getChannel().getPreviousProgram(this);
-		if (oPreviousProgram) oPreviousProgram.onfocus();
+		var oPreviousProgram;
+		if ((this.getDisplayableBeginDate() - this.getBeginDate()) > oTVGuide.getForwardStepInMinutes()) {
+			oTVGuide.draw(oTVGuide.getParentElement(), new Date(oTVGuide.getCurrentStartDate().getTime() - (oTVGuide.getForwardStepInMinutes() * 60000)))
+			this.onfocus();
+		} else {
+			oPreviousProgram = this.getChannel().getPreviousProgram(this);
+			if (oPreviousProgram) oPreviousProgram.onfocus();
+		}
 		break;
 	case 38: //UP
 		var oPreviousChannel = this.getChannel().getTVGuide().getPreviousChannel(this.getChannel());
 		if (oPreviousChannel) {
+			if (!oPreviousChannel.getElement()) {
+				oTVGuide.draw(oTVGuide.getParentElement(), new Date(oTVGuide.getCurrentStartDate().getTime()), oPreviousChannel);
+			}
 			var oProgram = oPreviousChannel.getProgramByDate(this.getBeginDate());
 			if (oProgram) oProgram.onfocus();
 		}
 		break;
 	case 39: //RIGHT
-		var oNextProgram = this.getChannel().getNextProgram(this);
-		if (oNextProgram) oNextProgram.onfocus();
+		var oNextProgram;
+		if ((this.getEndDate() - this.getDisplayableEndDate()) > oTVGuide.getForwardStepInMinutes()) {
+			oTVGuide.draw(oTVGuide.getParentElement(), new Date(oTVGuide.getCurrentStartDate().getTime() + (oTVGuide.getForwardStepInMinutes() * 60000)))
+			this.onfocus();
+		} else {
+			oNextProgram = this.getChannel().getNextProgram(this);
+			if (oNextProgram) oNextProgram.onfocus();
+		}
 		break;
 	case 40: //DOWN
 		var oNextChannel = this.getChannel().getTVGuide().getNextChannel(this.getChannel());
 		if (oNextChannel) {
+			if (!oNextChannel.getElement()) {
+				oTVGuide.draw(oTVGuide.getParentElement(), new Date(oTVGuide.getCurrentStartDate().getTime()), oNextChannel);
+			}
 			var oProgram = oNextChannel.getProgramByDate(this.getBeginDate());
 			if (oProgram) oProgram.onfocus();
 		}
