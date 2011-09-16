@@ -48,7 +48,7 @@ Channel.prototype.addProgram = function(oProgram) {
 }
 
 Channel.prototype.getNextProgram = function(oCurrentProgram) {
-	var oNextProgram = oCurrentProgram;
+	var oNextProgram;
 	for (var i=0; i<this.getProgramsList().length; i++) {
 		if (oCurrentProgram==this.getProgramsList()[i]){
 			if (this.getProgramsList().length==i) {
@@ -62,7 +62,7 @@ Channel.prototype.getNextProgram = function(oCurrentProgram) {
 }
 
 Channel.prototype.getPreviousProgram = function(oCurrentProgram) {
-	var oPreviousProgram = oCurrentProgram;
+	var oPreviousProgram;
 	for (var i=this.getProgramsList().length-1; i>=0; i--) {
 		if (oCurrentProgram==this.getProgramsList()[i]){
 			if (i==0) {
@@ -76,6 +76,7 @@ Channel.prototype.getPreviousProgram = function(oCurrentProgram) {
 }
 
 Channel.prototype.getProgramByDate = function(dDate) {
+	var oCurrentProgram;
 	for (var i=0; i<this.getProgramsList().length; i++) {
 		var oCurrentProgram = this.getProgramsList()[i];
 		if ((oCurrentProgram.getBeginDate() >= dDate) || ((oCurrentProgram.getBeginDate() <= dDate) && (oCurrentProgram.getEndDate() >= dDate))){
@@ -83,6 +84,7 @@ Channel.prototype.getProgramByDate = function(dDate) {
 			break;
 		} 
 	}
+	return oCurrentProgram;
 }
 
 Channel.prototype.getTVGuide = function() {
@@ -184,7 +186,6 @@ Channel.prototype.draw = function(eParent, dStartDate, dEndDate) {
 		eDiv.appendChild(eDivContent);
 		this.setElementContent(eDivContent);
 
-		var previousLeft = 0;
 		for (var i=0; i<this.getProgramsList().length; i++) {
 			var oProgram = this.getProgramsList()[i]; 
 			if (oProgram.getEndDate() > dStartDate) {
@@ -209,12 +210,8 @@ Channel.prototype.draw = function(eParent, dStartDate, dEndDate) {
 				oProgram.draw(eDivContent);
 				var programDiv = oProgram.getElement();
 				//compute left with beginDate
-				if(previousLeft==0) {
-					previousLeft = this.computeLeft(oProgram, dStartDate);
-				}
-				programDiv.style.left= previousLeft + "px";
+				programDiv.style.left= this.computeLeft(oProgram, dStartDate) + "px";
 				programDiv.style.top= eDiv.style.top;
-				previousLeft = previousLeft + programDiv.style.offsetWidth;
 			}
 		}
 		eParent.appendChild(eDiv);

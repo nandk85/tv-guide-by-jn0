@@ -142,9 +142,10 @@
 				/*Canal +*/
 				oChannel = new Channel(4, 4, "Canal+");
 				
+				/*Platanes*/
 				oProgram = new Program(5, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
 				
-				oVideo = new VideoDescriptor(1);
+				oVideo = new VideoDescriptor(5);
 				oVideo.setTitle("Platanes");
 				oVideo.setOriginalTitle("Platanes");
 				oVideo.setDuration(45);
@@ -152,6 +153,19 @@
 				
 				oProgram.setVideoDescriptor(oVideo);
 				oChannel.addProgram(oProgram);
+
+				/*Game of Thrones*/
+				oProgram = new Program(9, new Date(2011, 8, 14, 23, 30, 0, 0), new Date(2011, 8, 15, 0, 30, 0, 0));
+				
+				oVideo = new VideoDescriptor(9);
+				oVideo.setTitle("Le trône de fer");
+				oVideo.setOriginalTitle("Game of Throne");
+				oVideo.setDuration(60);
+				oVideo.setSummary("Célèbre série avec des dragons et plein de traîtres.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
 				oTVGuide.addChannel(oChannel);
 
 				oTVGuide.draw(getObject("TVGuideContainer"), new Date(2011, 8, 14, 21, 30, 0, 0));
