@@ -164,17 +164,26 @@ Program.prototype.onkeydown= function(evt) {
 	
 	switch(iKeyValue) {
 	case 37: //LEFT
-		this.getChannel().getPreviousProgram(this).onfocus();
+		var oPreviousProgram = this.getChannel().getPreviousProgram(this);
+		if (oPreviousProgram) oPreviousProgram.onfocus();
 		break;
 	case 38: //UP
-		this.getChannel().getTVGuide().getPreviousChannel(this.getChannel()).getProgramByDate(this.getBeginDate()).onfocus();
+		var oPreviousChannel = this.getChannel().getTVGuide().getPreviousChannel(this.getChannel());
+		if (oPreviousChannel) {
+			var oProgram = oPreviousChannel.getProgramByDate(this.getBeginDate());
+			if (oProgram) oProgram.onfocus();
+		}
 		break;
 	case 39: //RIGHT
-		this.getChannel().getNextProgram(this).onfocus();
+		var oNextProgram = this.getChannel().getNextProgram(this);
+		if (oNextProgram) oNextProgram.onfocus();
 		break;
 	case 40: //DOWN
-		//alert(this.getChannel().getTVGuide().getNextChannel(this.getChannel()).getProgramByDate(this.getBeginDate()));
-		this.getChannel().getTVGuide().getNextChannel(this.getChannel()).getProgramByDate(this.getBeginDate()).onfocus();
+		var oNextChannel = this.getChannel().getTVGuide().getNextChannel(this.getChannel());
+		if (oNextChannel) {
+			var oProgram = oNextChannel.getProgramByDate(this.getBeginDate());
+			if (oProgram) oProgram.onfocus();
+		}
 		break;
 	default:
 		return;
