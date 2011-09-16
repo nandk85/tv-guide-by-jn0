@@ -1,5 +1,7 @@
 var PADDING_TOP = 10;
 var PADDING_LEFT = 10;
+var ONE_HOUR_EQUALS_PIXEL = 100;
+var CHANNEL_HEIGHT = 50;
 
 function TVGuide(id, name){	
 	this._id = id;
@@ -28,6 +30,35 @@ TVGuide.prototype.addChannel = function(oChannel) {
 		this._channelsList = new Array();
 	}
 	this._channelsList.push(oChannel);
+	oChannel.setTVGuide(this);
+}
+
+TVGuide.prototype.getNextChannel = function(oCurrentChannel) {
+	var oNextChannel = oCurrentChannel;
+	for (var i=0; i<this.getChannelsList().length; i++) {
+		if (oCurrentChannel==this.getChannelsList()[i]){
+			if (this.getChannelsList().length==i) {
+				break;
+			} else {
+				oNextChannel = this.getChannelsList()[i+1];
+			}
+		} 
+	}
+	return oNextChannel;
+}
+
+TVGuide.prototype.getPreviousChannel = function(oCurrentChannel) {
+	var oPreviousChannel = oCurrentChannel;
+	for (var i=this.getChannelsList().length-1; i>=0; i--) {
+		if (oCurrentChannel==this.getChannelsList()[i]){
+			if (i==0) {
+				break;
+			} else {
+				oPreviousChannel = this.getChannelsList()[i-1];
+			}
+		} 
+	}
+	return oPreviousChannel;
 }
 
 TVGuide.prototype.getElement = function() {
@@ -38,11 +69,32 @@ TVGuide.prototype.setElement = function(eDiv) {
 	this._element = eDiv;
 }
 
+TVGuide.prototype.setFocusToFirstProgram = function() {
+	this.getChannelsList()[0].getProgramsList()[0].onfocus();
+}
+
+TVGuide.prototype.getOneHourInPixel = function() {
+	return ONE_HOUR_EQUALS_PIXEL;
+}
+
+TVGuide.prototype.getChannelHeight = function() {
+	return CHANNEL_HEIGHT;
+}
+
+TVGuide.prototype.computeDisplayableEndDate = function(dBeginDate) {
+	//compute the end date with the start date and the size of the guide
+	var tVGuideSizeInPixel = this.getElement().style.offsetWidth - CHANNEL_HEIGHT;
+	var tvGuideDuration = (tVGuideSizeInPixel/ONE_HOUR_EQUALS_PIXEL) * 3600000;
+	var endDate = new Date(dBeginDate.getTime() + tvGuideDuration);
+	return endDate;
+}
+
 TVGuide.prototype.draw = function(eParent, dStartDate) {
 	var eDiv= this.getElement();
 
 	if (!eDiv) {
 		eDiv= document.createElement("div");
+		this.setElement(eDiv);
 		//Position
 		eDiv.style.position="absolute";
 		eDiv.style.left= PADDING_LEFT + "px";
@@ -54,8 +106,11 @@ TVGuide.prototype.draw = function(eParent, dStartDate) {
 		eDiv.style.offsetHeight=0;
 		
 		eDiv.style.border = "1px solid red";
+		
+		var dDisplayableEndDate = this.computeDisplayableEndDate(dStartDate);
+		
 		for (var i=0; i<this.getChannelsList().length; i++) {
-			this.getChannelsList()[i].draw(eDiv, dStartDate);
+			this.getChannelsList()[i].draw(eDiv, dStartDate, dDisplayableEndDate);
 			var channelDiv = this.getChannelsList()[i].getElement();
 			//channelDiv.style.left= PADDING_LEFT + "px";
 			//alert(((eDiv.style.top.replace("px","")*1) + (i*channelDiv.style.offsetHeight)));
@@ -67,8 +122,6 @@ TVGuide.prototype.draw = function(eParent, dStartDate) {
 
 		eParent.appendChild(eDiv);
 	}
-	this.setElement(eDiv);
-		
 	
 /*		if (!document.onkeypress) {
 			window.currentGrid= this._parentGrid;

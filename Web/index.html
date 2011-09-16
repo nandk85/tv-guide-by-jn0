@@ -40,7 +40,7 @@
 				oChannel.addProgram(oProgram);
 
 				/*Matrix 2*/
-				oProgram = new Program(1, new Date(2011, 8, 14, 22, 30, 0, 0), new Date(2011, 8, 15, 0, 0, 0, 0));
+				oProgram = new Program(2, new Date(2011, 8, 14, 22, 30, 0, 0), new Date(2011, 8, 15, 0, 0, 0, 0));
 				oVideo = new VideoDescriptor(2);
 				oVideo.setTitle("Matrix reloaded");
 				oVideo.setOriginalTitle("The Matrix Reloaded");
@@ -51,7 +51,7 @@
 				oChannel.addProgram(oProgram);
 
 				/*Matrix 3*/
-				oProgram = new Program(1, new Date(2011, 8, 15, 0, 0, 0, 0), new Date(2011, 8, 15, 1, 30, 0, 0));
+				oProgram = new Program(3, new Date(2011, 8, 15, 0, 0, 0, 0), new Date(2011, 8, 15, 1, 30, 0, 0));
 				oVideo = new VideoDescriptor(3);
 				oVideo.setTitle("Matrix revolution");
 				oVideo.setOriginalTitle("The Matrix Revolution");
@@ -61,13 +61,24 @@
 				oProgram.setVideoDescriptor(oVideo);
 				oChannel.addProgram(oProgram);
 				
+				/*Animatrix*/
+				oProgram = new Program(6, new Date(2011, 8, 15, 1, 30, 0, 0), new Date(2011, 8, 15, 12, 30, 0, 0));
+				oVideo = new VideoDescriptor(6);
+				oVideo.setTitle("Animatrix");
+				oVideo.setOriginalTitle("The AniMatrix");
+				oVideo.setDuration(120);
+				oVideo.setSummary("Série d'anime inédite basé sur Matrix.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+				
 				
 				oTVGuide.addChannel(oChannel);
-				
 				/*France2*/
 				oChannel = new Channel(2, 2, "FRANCE2");
 				
-				oProgram = new Program(1, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 23, 00, 0, 0));
+				/*Josephine*/
+				oProgram = new Program(4, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 23, 00, 0, 0));
 				
 				oVideo = new VideoDescriptor(1);
 				oVideo.setTitle("Joséphine Ange Gardien");
@@ -77,12 +88,61 @@
 				
 				oProgram.setVideoDescriptor(oVideo);
 				oChannel.addProgram(oProgram);
+
+				/*Meteo*/
+				oProgram = new Program(7, new Date(2011, 8, 14, 23, 0, 0, 0), new Date(2011, 8, 14, 23, 05, 0, 0));
+				
+				oVideo = new VideoDescriptor(1);
+				oVideo.setTitle("Météo");
+				oVideo.setOriginalTitle("Météo");
+				oVideo.setDuration(5);
+				oVideo.setSummary("Météo présentée par Evelyne Délhia");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+
+				/*Meteo*/
+				oProgram = new Program(7, new Date(2011, 8, 14, 23, 05, 0, 0), new Date(2011, 8, 15, 5, 05, 0, 0));
+				
+				oVideo = new VideoDescriptor(7);
+				oVideo.setTitle("Fin des programmes");
+				oVideo.setOriginalTitle("");
+				oVideo.setDuration(360);
+				oVideo.setSummary("Bonne nuit");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+				
+				/*Tele matin*/
+				oProgram = new Program(7, new Date(2011, 8, 15, 5, 05, 0, 0), new Date(2011, 8, 15, 8, 00, 0, 0));
+				
+				oVideo = new VideoDescriptor(7);
+				oVideo.setTitle("Télé matin");
+				oVideo.setOriginalTitle("");
+				oVideo.setDuration(180);
+				oVideo.setSummary("Télé matin hein hein !!");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+				
+				/*Santa Barbara*/
+				oProgram = new Program(8, new Date(2011, 8, 15, 8, 00, 0, 0), new Date(2011, 8, 15, 12, 00, 0, 0));
+				
+				oVideo = new VideoDescriptor(7);
+				oVideo.setTitle("Santa Barbara");
+				oVideo.setOriginalTitle("");
+				oVideo.setDuration(240);
+				oVideo.setSummary("Célèbre série pourrie en 70000 épisodes.");
+				
+				oProgram.setVideoDescriptor(oVideo);
+				oChannel.addProgram(oProgram);
+				
 				oTVGuide.addChannel(oChannel);
 
 				/*Canal +*/
 				oChannel = new Channel(4, 4, "Canal+");
 				
-				oProgram = new Program(1, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
+				oProgram = new Program(5, new Date(2011, 8, 14, 22, 0, 0, 0), new Date(2011, 8, 14, 22, 45, 0, 0));
 				
 				oVideo = new VideoDescriptor(1);
 				oVideo.setTitle("Platanes");
@@ -94,8 +154,8 @@
 				oChannel.addProgram(oProgram);
 				oTVGuide.addChannel(oChannel);
 
-				
-				oTVGuide.draw(getObject("TVGuideContainer"), new Date(2011, 8, 14, 20, 30, 0, 0));
+				oTVGuide.draw(getObject("TVGuideContainer"), new Date(2011, 8, 14, 21, 30, 0, 0));
+				oTVGuide.setFocusToFirstProgram();
 				
 				//getObject("TVGuideContainer").innerHTML = oTVGuide.toString();
 				
