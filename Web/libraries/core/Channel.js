@@ -2,6 +2,7 @@ function Channel(id, iNumber, sName){
 	this._id = id;
 	this._number = iNumber;
 	this._name = sName;
+	this._fullName = sName;
 }
 
 Channel.prototype.getId = function() {
@@ -14,6 +15,13 @@ Channel.prototype.getName = function() {
 	return this._name;
 }
 
+Channel.prototype.getFullName = function() {
+	return this._fullName;
+}
+
+Channel.prototype.setFullName = function(sFullName) {
+	this._fullName = sFullName;
+}
 
 Channel.prototype.getDescription = function() {
 	return this._description;
@@ -135,88 +143,97 @@ Channel.prototype.computeLeft = function(oProgram, dTVGuideStartDate) {
 	}
 }
 
+Channel.prototype.deleteElement = function() {
+	for (var i=0; i<this.getProgramsList().length; i++) {
+		this.getProgramsList()[i].deleteElement();
+		if (this.getElement()) {
+			this.getElement().removeChild(this.getElement().childNodes[0]);
+		}
+	}
+}
+
 Channel.prototype.draw = function(eParent, dStartDate, dEndDate) {
 	var eDiv= this.getElement();
-	if (!eDiv) {
-		eDiv= document.createElement("div");
-		eDiv.style.position="absolute";
+	eDiv= document.createElement("div");
+	this.setElement(eDiv);
 
-		//position : done by parent
-		eDiv.style.position="absolute";
+	//position : done by parent
+	eDiv.style.position="absolute";
 
-		//size
-		eDiv.style.offsetHeight=this.getTVGuide().getChannelHeight();
-		eDiv.style.height = eDiv.style.offsetHeight+"px";
-		eDiv.style.offsetWidth=eParent.style.offsetWidth;
-		eDiv.style.width = eDiv.style.offsetWidth+"px";
+	//size
+	eDiv.style.offsetHeight=this.getTVGuide().getChannelHeight();
+	eDiv.style.height = eDiv.style.offsetHeight+"px";
+	eDiv.style.offsetWidth=eParent.style.offsetWidth;
+	eDiv.style.width = eDiv.style.offsetWidth+"px";
 
-		eDiv.style.border = "1px solid red";
+	eDiv.style.border = "1px solid red";
 
-		//header
-		var eDivHeader= document.createElement("div");
-		
-		//position : done by parent
-		eDivHeader.style.position="absolute";
+	//header
+	var eDivHeader= document.createElement("div");
+	
+	//position : done by parent
+	eDivHeader.style.position="absolute";
 
-		//size
-		eDivHeader.style.offsetHeight=this.getTVGuide().getChannelHeight();
-		eDivHeader.style.height = this.getTVGuide().getChannelHeight()+"px";
-		eDivHeader.style.offsetWidth=this.getTVGuide().getChannelHeight();
-		eDivHeader.style.width = this.getTVGuide().getChannelHeight()+"px";
-		eDivHeader.appendChild(document.createTextNode(this.getName()));
-		
-		eDivHeader.style.border = "1px solid black";
+	//size
+	eDivHeader.style.offsetHeight=this.getTVGuide().getChannelHeight();
+	eDivHeader.style.height = this.getTVGuide().getChannelHeight()+"px";
+	eDivHeader.style.offsetWidth=this.getTVGuide().getChannelHeaderWidth();
+	eDivHeader.style.width = this.getTVGuide().getChannelHeaderWidth()+"px";
+	var eTitle = document.createElement("span");
+	eTitle.appendChild(document.createTextNode(this.getFullName()));
+	eDivHeader.appendChild(eTitle);
 
-		eDiv.appendChild(eDivHeader);
-		this.setElementHeader(eDivHeader)
+	//CSS
+	eDivHeader.className="ChannelHeader";
 
-		//Content
-		var eDivContent= document.createElement("div");
+	eDiv.appendChild(eDivHeader);
+	this.setElementHeader(eDivHeader)
 
-		//position : done by parent
-		eDivContent.style.position="absolute";
-		eDivContent.style.left = this.getTVGuide().getChannelHeight()+"px";
+	//Content
+	var eDivContent= document.createElement("div");
 
-		//size
-		eDivContent.style.offsetHeight=this.getTVGuide().getChannelHeight();
-		eDivContent.style.height = this.getTVGuide().getChannelHeight()+"px";
-		
-		eDivContent.style.border = "1px solid blue";
+	//position : done by parent
+	eDivContent.style.position="absolute";
+	eDivContent.style.left = this.getTVGuide().getChannelHeaderWidth()+"px";
 
-		eDiv.appendChild(eDivContent);
-		this.setElementContent(eDivContent);
+	//size
+	eDivContent.style.offsetHeight=this.getTVGuide().getChannelHeight();
+	eDivContent.style.height = this.getTVGuide().getChannelHeight()+"px";
+	
+	eDivContent.style.border = "1px solid blue";
 
-		for (var i=0; i<this.getProgramsList().length; i++) {
-			var oProgram = this.getProgramsList()[i]; 
-			if (oProgram.getEndDate() > dStartDate) {
-				if (oProgram.getBeginDate() < dStartDate) {
-					oProgram.setDisplayableBeginDate(dStartDate);
-				} else {
-					oProgram.setDisplayableBeginDate(oProgram.getBeginDate());
-				}
-				if (oProgram.getEndDate() > dEndDate) {
-					oProgram.setDisplayableEndDate(dEndDate);
-				} else {
-					oProgram.setDisplayableEndDate(oProgram.getEndDate());
-				}
+	eDiv.appendChild(eDivContent);
+	this.setElementContent(eDivContent);
+
+	for (var i=0; i<this.getProgramsList().length; i++) {
+		var oProgram = this.getProgramsList()[i]; 
+		if (oProgram.getEndDate() > dStartDate) {
+			if (oProgram.getBeginDate() < dStartDate) {
+				oProgram.setDisplayableBeginDate(dStartDate);
+			} else {
+				oProgram.setDisplayableBeginDate(oProgram.getBeginDate());
+			}
+			if (oProgram.getEndDate() > dEndDate) {
+				oProgram.setDisplayableEndDate(dEndDate);
+			} else {
+				oProgram.setDisplayableEndDate(oProgram.getEndDate());
+			}
 /*				alert("TVGuideStart " + dStartDate + "\n" +
 						"TVGuideEnd " + dEndDate + "\n" +
 						oProgram.getVideoDescriptor().getTitle() + "\n" + 
 						"Begin " + oProgram.getDisplayableBeginDate() + "\n" +
 						"End " + oProgram.getDisplayableEndDate());
 */
-				
-				//alert(oProgram.getDisplayableDate());
-				oProgram.draw(eDivContent);
-				var programDiv = oProgram.getElement();
-				//compute left with beginDate
-				programDiv.style.left= this.computeLeft(oProgram, dStartDate) + "px";
-				programDiv.style.top= eDiv.style.top;
-			}
+			
+			//alert(oProgram.getDisplayableDate());
+			oProgram.draw(eDivContent);
+			var programDiv = oProgram.getElement();
+			//compute left with beginDate
+			programDiv.style.left= this.computeLeft(oProgram, dStartDate) + "px";
+			programDiv.style.top= eDiv.style.top;
 		}
-		eParent.appendChild(eDiv);
 	}
-	this.setElement(eDiv);
+	eParent.appendChild(eDiv);
 }
 
 

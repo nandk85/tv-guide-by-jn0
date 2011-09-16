@@ -1,3 +1,19 @@
+.ChannelHeader {
+	text-align : left;
+	vertical-align : bottom;
+	border :1px solid black;
+}
+
+.ChannelHeader span {
+	white-space:nowrap;
+	display:block;
+  	position:absolute;
+  	top: 50%;
+  	height: 10px;
+  	margin-top: -0.5em;
+}
+
+
 /*
  * jQuery UI CSS Framework 1.8.16
  *
